@@ -745,11 +745,9 @@ public:
      */
     iterator find(const key_type& x) {
         size_type index = hash(x) % count_buckets;
-        //допустим произошла коллизия и элемент оказался в другом месте, ищем
         while (data[index].first != x && status_table[index] != 0) {
             index = (index + hash(x)) % count_buckets;
         }
-        //если по этому индексу лежит нужный элемент и в статусе его место равно 1
         if (data[index].first == x && status_table[index] == 1) {
             return iterator(data, status_table, index);
         } else return iterator(data, status_table, count_buckets);
